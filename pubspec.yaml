@@ -14,9 +14,13 @@ dependencies:
     sdk: flutter
   three_dart:
     git:
-      url: https://github.com/vfarafonov/three_dart.git
+      url: https://github.com/iamtechieboy/three_dart.git
       ref: main
-  flutter_gl: ^0.0.20
+  flutter_gl:
+    git:
+      url: https://github.com/PurpleShipHub/flutter_gl.git
+      ref: main
+      path: flutter_gl
   typr_dart: ^0.0.2
   opentype_dart: ^0.0.1
   archive: ^3.3.0
