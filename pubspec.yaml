@@ -10,7 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  three_dart: ^0.0.16
+  three_dart:
+    git:
+      url: https://github.com/AndyPandy25/three_dart.git
+      ref: main
   flutter_gl: ^0.0.20
   typr_dart: ^0.0.2
   opentype_dart: ^0.0.1
