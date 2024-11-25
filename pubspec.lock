@@ -97,10 +97,11 @@ packages:
   flutter_gl:
     dependency: "direct main"
     description:
-      name: flutter_gl
-      sha256: de74c88f77228f47dd280e2092b50eb49fe1fc008de74047d195a27f2db0b491
-      url: "https://pub.dev"
-    source: hosted
+      path: flutter_gl
+      ref: main
+      resolved-ref: "6ca323e4e5483ebcc441b036b21fb5604f361871"
+      url: "https://github.com/PurpleShipHub/flutter_gl.git"
+    source: git
     version: "0.0.21"
   flutter_gl_macos:
     dependency: transitive
@@ -322,8 +323,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: f633336985889c63ddb261fee5551e47f6f98aed
-      url: "https://github.com/vfarafonov/three_dart.git"
+      resolved-ref: "3071f81018694686939ab42936a7bedb02708f1e"
+      url: "https://github.com/iamtechieboy/three_dart.git"
     source: git
     version: "0.0.17"
   typed_data:
