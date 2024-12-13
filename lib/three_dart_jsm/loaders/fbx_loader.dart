@@ -280,7 +280,7 @@ class FBXTreeParser {
   parseTexture(textureNode, images) async {
     var texture = await loadTexture(textureNode, images);
 
-    texture.id = textureNode["id"];
+    texture.productId = textureNode["id"];
 
     texture.name = textureNode["attrName"];
 
@@ -548,7 +548,7 @@ class FBXTreeParser {
   // get a texture from the textureMap for use by a material.
   getTexture(textureMap, id) {
     // if the texture is a layered texture, just use the first layer and issue a warning
-    if (fbxTree.objects["LayeredTexture"] != null && fbxTree.objects["LayeredTexture"].id != null) {
+    if (fbxTree.objects["LayeredTexture"] != null && fbxTree.objects["LayeredTexture"].productId != null) {
       print('THREE.FBXLoader: layered textures are not supported in three.js. Discarding all but first layer.');
       id = connections[id].children[0].ID;
     }
@@ -647,7 +647,7 @@ class FBXTreeParser {
       var rawMorphTarget = {
         "name": morphTargetNode.attrName,
         "initialWeight": morphTargetNode.DeformPercent,
-        "id": morphTargetNode.id,
+        "id": morphTargetNode.productId,
         "fullWeights": morphTargetNode.FullWeights.a
       };
 
@@ -673,10 +673,10 @@ class FBXTreeParser {
 
     var scope = this;
     modelMap.forEach((key, model) {
-      var modelNode = modelNodes[model.id];
+      var modelNode = modelNodes[model.productId];
       scope.setLookAtProperties(model, modelNode);
 
-      var parentConnections = connections[model.id]["parents"];
+      var parentConnections = connections[model.productId]["parents"];
 
       parentConnections.forEach((connection) {
         var parent = modelMap[connection["ID"]];
@@ -755,7 +755,7 @@ class FBXTreeParser {
 
         model.name = node["attrName"] != null ? PropertyBinding.sanitizeNodeName(node["attrName"]) : '';
 
-        model.id = id;
+        model.productId = id;
       }
 
       getTransformData(model, node);
@@ -782,7 +782,7 @@ class FBXTreeParser {
             // set name and id here - otherwise in cases where "subBone" is created it will not have a name / id
 
             bone.name = name != null ? PropertyBinding.sanitizeNodeName(name) : '';
-            bone.id = id;
+            bone.productId = id;
 
             if (skeleton["bones"].length <= i) {
               final boneList = List<Bone>.filled((i + 1) - skeleton["bones"].length, Bone());
@@ -1051,7 +1051,7 @@ class FBXTreeParser {
 
   setLookAtProperties(model, Map modelNode) {
     if (modelNode["LookAtProperty"] != null) {
-      var children = connections[model.id].children;
+      var children = connections[model.productId].children;
 
       children.forEach((child) {
         if (child.relationship == 'LookAtProperty') {
@@ -1764,7 +1764,7 @@ class GeometryParser {
     var order = int.tryParse(geoNode.Order);
 
     if (order == null) {
-      print('THREE.FBXLoader: Invalid Order ${geoNode.Order} given for geometry ID: ${geoNode.id}');
+      print('THREE.FBXLoader: Invalid Order ${geoNode.Order} given for geometry ID: ${geoNode.productId}');
       return BufferGeometry();
     }
 
@@ -1945,7 +1945,7 @@ class AnimationParser {
                 };
 
                 sceneGraph.traverse((child) {
-                  if (child.id == rawModel["id"]) {
+                  if (child.productId == rawModel["id"]) {
                     node["transform"] = child.matrix;
 
                     if (child.userData["transformData"] != null) {
@@ -2369,15 +2369,15 @@ class TextParser {
         // special case Pose needs PoseNodes as an array
         if (nodeName == 'PoseNode') {
           currentNode["PoseNode"].add(node);
-        } else if (currentNode[nodeName].id != null) {
+        } else if (currentNode[nodeName].productId != null) {
           currentNode[nodeName] = {};
-          currentNode[nodeName][currentNode[nodeName].id] = currentNode[nodeName];
+          currentNode[nodeName][currentNode[nodeName].productId] = currentNode[nodeName];
         }
 
-        if (attrs.id != '') currentNode[nodeName][attrs.id] = node;
-      } else if (attrs.id is num) {
+        if (attrs.productId != '') currentNode[nodeName][attrs.productId] = node;
+      } else if (attrs.productId is num) {
         currentNode[nodeName] = {};
-        currentNode[nodeName][attrs.id] = node;
+        currentNode[nodeName][attrs.productId] = node;
       } else if (nodeName != 'Properties70') {
         if (nodeName == 'PoseNode') {
           currentNode[nodeName] = [node];
@@ -2387,7 +2387,7 @@ class TextParser {
       }
     }
 
-    if (attrs.id is num) node["id"] = attrs.id;
+    if (attrs.productId is num) node["id"] = attrs.productId;
     if (attrs.name != '') node["attrName"] = attrs.name;
     if (attrs.type != '') node["attrType"] = attrs.type;
 
@@ -2457,7 +2457,7 @@ class TextParser {
     }
 
     // Node
-    if (propName == 'Node') currentNode.id = propValue;
+    if (propName == 'Node') currentNode.productId = propValue;
 
     // connections
     if (currentNode.keys.contains(propName) && currentNode[propName] is List) {

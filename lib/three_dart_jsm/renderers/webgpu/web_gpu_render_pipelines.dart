@@ -142,8 +142,8 @@ class WebGPURenderPipelines {
     var renderer = this.renderer;
 
     var parameters = [
-      stageVertex.id,
-      stageFragment.id,
+      stageVertex.productId,
+      stageFragment.productId,
       material.transparent,
       material.blending,
       material.premultipliedAlpha,

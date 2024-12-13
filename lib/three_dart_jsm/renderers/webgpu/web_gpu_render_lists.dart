@@ -6,12 +6,12 @@ painterSortStable(a, b) {
     return a.groupOrder - b.groupOrder;
   } else if (a.renderOrder != b.renderOrder) {
     return a.renderOrder - b.renderOrder;
-  } else if (a.material.id != b.material.id) {
-    return a.material.id - b.material.id;
+  } else if (a.material.productId != b.material.productId) {
+    return a.material.productId - b.material.productId;
   } else if (a.z != b.z) {
     return a.z - b.z;
   } else {
-    return a.id - b.id;
+    return a.productId - b.productId;
   }
 }
 
@@ -23,7 +23,7 @@ reversePainterSortStable(a, b) {
   } else if (a.z != b.z) {
     return b.z - a.z;
   } else {
-    return a.id - b.id;
+    return a.productId - b.productId;
   }
 }
 
@@ -57,7 +57,7 @@ class WebGPURenderList {
 
     if (renderItem == undefined) {
       renderItem = RenderItem(
-          id: object.id,
+          id: object.productId,
           object: object,
           geometry: geometry,
           material: material,
@@ -69,7 +69,7 @@ class WebGPURenderList {
       // this.renderItems[ this.renderItemsIndex ] = renderItem;
       renderItems.add(renderItem);
     } else {
-      renderItem.id = object.id;
+      renderItem.productId = object.productId;
       renderItem.object = object;
       renderItem.geometry = geometry;
       renderItem.material = material;
@@ -107,9 +107,9 @@ class WebGPURenderList {
     for (var i = renderItemsIndex, il = renderItems.length; i < il; i++) {
       var renderItem = renderItems[i];
 
-      if (renderItem.id == null) break;
+      if (renderItem.productId == null) break;
 
-      renderItem.id = null;
+      renderItem.productId = null;
       renderItem.object = null;
       renderItem.geometry = null;
       renderItem.material = null;
