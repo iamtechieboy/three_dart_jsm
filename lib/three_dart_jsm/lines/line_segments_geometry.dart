@@ -174,7 +174,7 @@ class LineSegmentsGeometry extends InstancedBufferGeometry {
 
       if (boundingSphere?.radius == null) {
         print(
-            'THREE.LineSegmentsGeometry.computeBoundingSphere(): Computed radius is NaN. The instanced position data is likely to have NaN values. ${this}');
+            'THREE.LineSegmentsGeometry.computeBoundingSphere(): Computed radius is NaN. The instanced position data is likely to have NaN values. $this');
       }
     }
   }

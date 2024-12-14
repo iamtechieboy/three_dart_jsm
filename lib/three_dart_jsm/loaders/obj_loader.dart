@@ -155,7 +155,7 @@ class ParserState {
       return;
     }
 
-    var previousMaterial = object != null ? object!.currentMaterial() : null;
+    var previousMaterial = object?.currentMaterial();
 
     if (object != null) {
       object!._finalize(true);

@@ -90,7 +90,7 @@ class Node {
     if (name == "xyz") {
       return xyz;
     } else {
-      throw ("Node ${this} getProperty name: $name is not support  ");
+      throw ("Node $this getProperty name: $name is not support  ");
     }
   }
 }

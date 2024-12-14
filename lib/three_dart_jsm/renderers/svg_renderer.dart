@@ -129,21 +129,21 @@ class SVGRenderer {
   String _currentPath = '';
   String _currentStyle = '';
 
-  Box2 _clipBox = Box2(null,null);
-  Box2 _elemBox = Box2(null,null);
-  Color _color = Color();
-  Color _diffuseColor = Color();
-  Color _ambientLight = Color();
-  Color _directionalLights = Color();
-  Color _pointLights = Color();
-  Color _clearColor = Color();
+  final Box2 _clipBox = Box2(null,null);
+  final Box2 _elemBox = Box2(null,null);
+  final Color _color = Color();
+  final Color _diffuseColor = Color();
+  final Color _ambientLight = Color();
+  final Color _directionalLights = Color();
+  final Color _pointLights = Color();
+  final Color _clearColor = Color();
 
-  Vector3 _vector3 = Vector3();
-  Vector3 _centroid = Vector3();
-  Vector3 _normal = Vector3();
-  Matrix3 _normalViewMatrix = Matrix3();
-  Matrix4 _viewMatrix = Matrix4();
-  Matrix4 _viewProjectionMatrix = Matrix4();
+  final Vector3 _vector3 = Vector3();
+  final Vector3 _centroid = Vector3();
+  final Vector3 _normal = Vector3();
+  final Matrix3 _normalViewMatrix = Matrix3();
+  final Matrix4 _viewMatrix = Matrix4();
+  final Matrix4 _viewProjectionMatrix = Matrix4();
 
   SVGDocument svg = SVGDocument(addHeader:true,edgeOnly: true);
   SVGDocument _svgNode = SVGDocument();
@@ -236,50 +236,50 @@ class SVGRenderer {
       _elemBox.makeEmpty();
 
       if(element is RenderableSprite){
-        RenderableSprite _v1 = element;
-        _v1.x *= widthHalf;
-        _v1.y *= - heightHalf;
-        renderSprite( _v1, element, material );
+        RenderableSprite v1 = element;
+        v1.x *= widthHalf;
+        v1.y *= - heightHalf;
+        renderSprite( v1, element, material );
       } 
       else if(element is RenderableLine){
-        RenderableVertex _v1 = element.v1;
-        RenderableVertex _v2 = element.v2;
+        RenderableVertex v1 = element.v1;
+        RenderableVertex v2 = element.v2;
 
-        _v1.positionScreen.x *= widthHalf;
-        _v1.positionScreen.y *= -heightHalf;
-        _v2.positionScreen.x *= widthHalf;
-        _v2.positionScreen.y *= -heightHalf;
+        v1.positionScreen.x *= widthHalf;
+        v1.positionScreen.y *= -heightHalf;
+        v2.positionScreen.x *= widthHalf;
+        v2.positionScreen.y *= -heightHalf;
 
-        _elemBox.setFromPoints([_v1.positionScreen.toVector2(), _v2.positionScreen.toVector2()]);
+        _elemBox.setFromPoints([v1.positionScreen.toVector2(), v2.positionScreen.toVector2()]);
 
         if (_clipBox.intersectsBox(_elemBox)) {
-          renderLine( _v1, _v2, material );
+          renderLine( v1, v2, material );
         }
       } 
       else if(element is RenderableFace){
-        RenderableVertex _v1 = element.v1;
-        RenderableVertex _v2 = element.v2;
-        RenderableVertex _v3 = element.v3;
-        if ( _v1.positionScreen.z < - 1 || _v1.positionScreen.z > 1 ) continue;
-        if ( _v2.positionScreen.z < - 1 || _v2.positionScreen.z > 1 ) continue;
-        if ( _v3.positionScreen.z < - 1 || _v3.positionScreen.z > 1 ) continue;
-        _v1.positionScreen.x *= widthHalf;
-        _v1.positionScreen.y *= - heightHalf;
-        _v2.positionScreen.x *= widthHalf;
-        _v2.positionScreen.y *= - heightHalf;
-        _v3.positionScreen.x *= widthHalf;
-        _v3.positionScreen.y *= - heightHalf;
+        RenderableVertex v1 = element.v1;
+        RenderableVertex v2 = element.v2;
+        RenderableVertex v3 = element.v3;
+        if ( v1.positionScreen.z < - 1 || v1.positionScreen.z > 1 ) continue;
+        if ( v2.positionScreen.z < - 1 || v2.positionScreen.z > 1 ) continue;
+        if ( v3.positionScreen.z < - 1 || v3.positionScreen.z > 1 ) continue;
+        v1.positionScreen.x *= widthHalf;
+        v1.positionScreen.y *= - heightHalf;
+        v2.positionScreen.x *= widthHalf;
+        v2.positionScreen.y *= - heightHalf;
+        v3.positionScreen.x *= widthHalf;
+        v3.positionScreen.y *= - heightHalf;
 
         if (overdraw > 0 ) {
-          expand( _v1.positionScreen, _v2.positionScreen, overdraw );
-          expand( _v2.positionScreen, _v3.positionScreen, overdraw );
-          expand( _v3.positionScreen, _v1.positionScreen, overdraw );
+          expand( v1.positionScreen, v2.positionScreen, overdraw );
+          expand( v2.positionScreen, v3.positionScreen, overdraw );
+          expand( v3.positionScreen, v1.positionScreen, overdraw );
         }
 
-        _elemBox.setFromPoints([ _v1.positionScreen.toVector2(), _v2.positionScreen.toVector2(), _v3.positionScreen.toVector2()]);
+        _elemBox.setFromPoints([ v1.positionScreen.toVector2(), v2.positionScreen.toVector2(), v3.positionScreen.toVector2()]);
 
         if(_clipBox.intersectsBox(_elemBox)){
-          renderFace3( _v1, _v2, _v3, element, material );
+          renderFace3( v1, v2, v3, element, material );
         }
       }
     }
@@ -363,7 +363,7 @@ class SVGRenderer {
       scaleY *= material.size!;
     }
 
-    String path = 'M' + convert( v1.x - scaleX * 0.5 ) + ',' + convert( v1.y - scaleY * 0.5 ) + 'h' + convert( scaleX ) + 'v' + convert( scaleY ) + 'h' + convert( - scaleX ) + 'z';
+    String path = 'M${convert( v1.x - scaleX * 0.5 )},${convert( v1.y - scaleY * 0.5 )}h${convert( scaleX )}v${convert( scaleY )}h${convert( - scaleX )}z';
     String style = '';
 
     if ( material is SpriteMaterial || material is PointsMaterial ) {
@@ -373,7 +373,7 @@ class SVGRenderer {
     addPath(style, path);
   }
   void renderLine(RenderableVertex v1, RenderableVertex v2, Material material ) {
-    String path = 'M' + convert(v1.positionScreen.x) + ',' + convert( v1.positionScreen.y ) + 'L' + convert( v2.positionScreen.x ) + ',' + convert( v2.positionScreen.y );
+    String path = 'M${convert(v1.positionScreen.x)},${convert( v1.positionScreen.y )}L${convert( v2.positionScreen.x )},${convert( v2.positionScreen.y )}';
     if (material is LineBasicMaterial) {
       String style = 'fill:none;stroke:${material.color.getStyle()};stroke-opacity:${material.opacity};stroke-width:${material.linewidth};stroke-linecap:${material.linecap}';
       if ( material is LineDashedMaterial ) {
@@ -386,7 +386,7 @@ class SVGRenderer {
   void renderFace3(RenderableVertex v1,RenderableVertex v2,RenderableVertex v3, RenderableFace element, Material material) {
     info.vertices += 3;
     info.faces ++;
-    String path = 'M' + convert(v1.positionScreen.x) + ',' + convert( v1.positionScreen.y ) + 'L' + convert( v2.positionScreen.x ) + ',' + convert( v2.positionScreen.y ) + 'L' + convert( v3.positionScreen.x ) + ',' + convert( v3.positionScreen.y ) + 'z';
+    String path = 'M${convert(v1.positionScreen.x)},${convert( v1.positionScreen.y )}L${convert( v2.positionScreen.x )},${convert( v2.positionScreen.y )}L${convert( v3.positionScreen.x )},${convert( v3.positionScreen.y )}z';
     String style = '';
 
     if ( material is MeshBasicMaterial) {

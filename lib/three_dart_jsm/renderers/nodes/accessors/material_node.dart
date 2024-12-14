@@ -37,7 +37,7 @@ class MaterialNode extends Node {
 
     var node;
 
-    print(" ============ this ${this} generate scope: $scope  ");
+    print(" ============ this $this generate scope: $scope  ");
 
     if (scope == MaterialNode.alphaTest) {
       node = MaterialReferenceNode('alphaTest', 'float');
