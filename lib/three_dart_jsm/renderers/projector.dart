@@ -399,26 +399,24 @@ class Projector {
           double z = positions[i + 2];
           List<BufferAttribute<NativeArray<num>>>? morphTargets = geometry.morphAttributes['position'];
 
-          if (morphTargets != null) {
-            bool morphTargetsRelative = geometry.morphTargetsRelative;
-            List<num>? morphInfluences = object.morphTargetInfluences;
+          bool morphTargetsRelative = geometry.morphTargetsRelative;
+          List<num>? morphInfluences = object.morphTargetInfluences;
 
-            for (int t = 0; t < morphTargets.length; t++) {
-              num influence = morphInfluences![t];
-              if (influence == 0) continue;
-              BufferAttribute<NativeArray<num>>? target = morphTargets[t];
-              if (morphTargetsRelative) {
-                x += target.getX(i ~/ 3)! * influence;
-                y += target.getY(i ~/ 3)! * influence;
-                z += target.getZ(i ~/ 3)! * influence;
-              } else {
-                x += (target.getX(i ~/ 3)! - positions[i]) * influence;
-                y += (target.getY(i ~/ 3)! - positions[i + 1]) * influence;
-                z += (target.getZ(i ~/ 3)! - positions[i + 2]) * influence;
-              }
+          for (int t = 0; t < morphTargets.length; t++) {
+            num influence = morphInfluences[t];
+            if (influence == 0) continue;
+            BufferAttribute<NativeArray<num>>? target = morphTargets[t];
+            if (morphTargetsRelative) {
+              x += target.getX(i ~/ 3)! * influence;
+              y += target.getY(i ~/ 3)! * influence;
+              z += target.getZ(i ~/ 3)! * influence;
+            } else {
+              x += (target.getX(i ~/ 3)! - positions[i]) * influence;
+              y += (target.getY(i ~/ 3)! - positions[i + 1]) * influence;
+              z += (target.getZ(i ~/ 3)! - positions[i + 2]) * influence;
             }
           }
-
+        
           pushVertex(x, y, z);
         }
 
